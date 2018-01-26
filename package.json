@@ -2,13 +2,16 @@
   "name": "electro-base",
   "version": "0.0.0",
   "license": "MIT",
+  "main": "main.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "electron": "electron .",
+    "electron-build": "ng build --prod && electron ."
   },
   "private": true,
   "dependencies": {
@@ -21,7 +24,9 @@
     "@angular/platform-browser": "^5.2.0",
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
+    "angularfire2": "^5.0.0-rc.6",
     "core-js": "^2.4.1",
+    "firebase": "^4.9.0",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19"
   },
