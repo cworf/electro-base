@@ -10,3 +10,10 @@
     {{post.data.content}}
   </li>
 </ul>
+
+<div class="single-post">
+	<h3>This is the post you clicked</h3>
+	<p><strong>{{(singlePost | async)?.title}}</strong>
+    <br>
+    {{(singlePost | async)?.content}}</p>
+</div>

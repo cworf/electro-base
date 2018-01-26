@@ -25,6 +25,9 @@ export class AppComponent {
 	title: string;
 	content: string;
 
+	postDoc: AngularFirestoreDocument<Post>
+	singlePost: Observable<Post>;
+
   constructor(private afs: AngularFirestore){}
 
   ngOnInit(){
@@ -42,7 +45,12 @@ export class AppComponent {
   }
 
   addPost(){
-	  this.postsCollection.add({'title': this.title, 'content': this.content})
+	  this.postsCollection.add({'title': this.title, 'content': this.content});
 	  // this.postsCollection.doc('my-custom-id').set({'title': this.title, 'content': this.content}) //this is how you make a custom id if needed
+  }
+
+  getPost(id){
+	  this.postDoc = this.afs.doc('posts/' + id); //this gets the specific post (or "document" in firestore) from firestore based on the id of clicked element
+	  this.singlePost = this.postDoc.valueChanges(); //this changes that post's observable into a readable json
   }
 }
