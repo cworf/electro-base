@@ -54,5 +54,9 @@ export class AuthService {
     return userRef.set(data)
   }
 
-
+  signOut() {
+    this.afAuth.auth.signOut().then(() => {
+        this.router.navigate(['/']);
+    });
+  }
 }
