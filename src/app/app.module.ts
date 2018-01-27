@@ -5,6 +5,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 import { AppComponent } from './app.component';
+import { CoreModule } from './core/core.module';
 
 var firebaseConfig = {
 	apiKey: "AIzaSyAAavzU127vTBhpDUsb7ohOMQO5Y30AP3I",
@@ -23,7 +24,8 @@ var firebaseConfig = {
     BrowserModule,
 	FormsModule,
 	AngularFireModule.initializeApp(firebaseConfig),
-    AngularFirestoreModule    
+    AngularFirestoreModule,
+	CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]
