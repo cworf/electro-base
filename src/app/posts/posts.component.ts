@@ -2,10 +2,13 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map'; //RxJS or Reactive Extensions for JavaScript is a library for transforming, composing, and querying streams of all kinds of data, from simple arrays of values, to series of events, to complex flows of data
+import { AuthService } from '../core/auth.service';
 
 interface Post{
 	title: string;
 	content: string;
+	authorName: string;
+	authorId: string;
 }
 
 interface PostId extends Post{
@@ -15,7 +18,8 @@ interface PostId extends Post{
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
-  styleUrls: ['./posts.component.css']
+  styleUrls: ['./posts.component.css'],
+  providers: [AuthService]
 })
 export class PostsComponent implements OnInit {
 	// @Input() thisUser:
@@ -25,11 +29,13 @@ export class PostsComponent implements OnInit {
 
 	title: string;
 	content: string;
+	authorName: string;
+	authorId: string;
 
 	postDoc: AngularFirestoreDocument<Post>
 	singlePost: Observable<Post>;
 
-  constructor(private afs: AngularFirestore){}
+  constructor(private afs: AngularFirestore, private auth : AuthService){}
 
   ngOnInit(){
 	  this.postsCollection = this.afs.collection('posts');
@@ -42,12 +48,19 @@ export class PostsComponent implements OnInit {
 				console.log({id, data});
 				return { id, data }; //this is the new object given to each post
 			});
-		}); console.log(this.posts)
+		}); console.log(this.auth.user);
+		this.auth.user.subscribe(data => {
+  		  console.log(data);
+  	  		this.authorName = data.displayName;
+			this.authorId = data.uid;
+		});
   }
 
   addPost(){
-	  this.postsCollection.add({'title': this.title, 'content': this.content});
+
+	  this.postsCollection.add({'title': this.title, 'content': this.content, 'authorName': this.authorName, 'authorId': this.authorId});
 	  // this.postsCollection.doc('my-custom-id').set({'title': this.title, 'content': this.content}) //this is how you make a custom id if needed
+
   }
 
   getPost(id){
