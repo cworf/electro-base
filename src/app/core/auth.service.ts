@@ -18,6 +18,14 @@ interface User { //this will be the structure of the user collection
 @Injectable()
 export class AuthService {
 
-  constructor() { }
+	user: Observable<User>;
+
+  constructor(private afAuth : AngularFireAuth, private afs : AngularFirestore, private router: Router) {
+	  this.user = this.afAuth.authState.switchMap(user => {
+		  if (user) {
+		      return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+		  }
+	  })
+  }
 
 }
