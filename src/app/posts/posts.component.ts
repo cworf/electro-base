@@ -69,6 +69,7 @@ export class PostsComponent implements OnInit {
   }
 
   deletePost(id){
+	  console.log(id)
 	  this.afs.doc('posts/' + id).delete();
   }
 
