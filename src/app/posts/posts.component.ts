@@ -3,17 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map'; //RxJS or Reactive Extensions for JavaScript is a library for transforming, composing, and querying streams of all kinds of data, from simple arrays of values, to series of events, to complex flows of data
 import { AuthService } from '../core/auth.service';
-
-interface Post{
-	title: string;
-	content: string;
-	authorName: string;
-	authorId: string;
-}
-
-interface PostId extends Post{
-	id: string;
-}
+import { Post, PostId } from '../core/post';
 
 @Component({
   selector: 'app-posts',
@@ -22,7 +12,6 @@ interface PostId extends Post{
   providers: [AuthService]
 })
 export class PostsComponent implements OnInit {
-	// @Input() thisUser:
 
 	postsCollection: AngularFirestoreCollection<Post>;
 	posts: any;
@@ -42,8 +31,8 @@ export class PostsComponent implements OnInit {
 	  // this.posts = this.postsCollection.valueChanges();  //this code gets all of the values defined above
 	  this.posts = this.postsCollection.snapshotChanges()  //this code gets all values inside the firestore object and allows you to map the unique post id into the returned object
 	  	.map(actions => { //actions represents the loop through each post
-			return actions.map(a => { //a represents a loop through the parameters of each post
-				const data = a.payload.doc.data() as Post; //note that the returned post parameters(title and content) or whatever gets added down the road will be mapped into the data object
+			return actions.map(a => { //a represents a loop through the properties of each post
+				const data = a.payload.doc.data() as Post; //note that the returned post properties(title and content) or whatever gets added down the road will be mapped into the data object
 				const id = a.payload.doc.id;
 				console.log({id, data});
 				return { id, data }; //this is the new object given to each post
@@ -68,7 +57,8 @@ export class PostsComponent implements OnInit {
 
   getPost(id){
 	  this.postDoc = this.afs.doc('posts/' + id); //this gets the specific post (or "document" in firestore) from firestore based on the id of clicked element
-	  this.singlePost = this.postDoc.valueChanges(); //this changes that post's observable into a readable json
+	  this.singlePost = this.postDoc.valueChanges(); //this records the post into singlePost
+	  console.log(this.singlePost)
   }
 
   deletePost(id){

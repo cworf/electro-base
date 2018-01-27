@@ -10,6 +10,7 @@ import { CoreModule } from './core/core.module';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { routing } from './app.routing';
 import { PostsComponent } from './posts/posts.component';
+import { MyPostsComponent } from './my-posts/my-posts.component';
 
 
 var firebaseConfig = {
@@ -25,7 +26,8 @@ var firebaseConfig = {
   declarations: [
     AppComponent,
     UserProfileComponent,
-    PostsComponent
+    PostsComponent,
+    MyPostsComponent
   ],
   imports: [
     BrowserModule,
