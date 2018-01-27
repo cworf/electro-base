@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { routing } from './app.routing';
+import { PostsComponent } from './posts/posts.component';
 
 
 var firebaseConfig = {
@@ -23,7 +24,8 @@ var firebaseConfig = {
 @NgModule({
   declarations: [
     AppComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    PostsComponent
   ],
   imports: [
     BrowserModule,
