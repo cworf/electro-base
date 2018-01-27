@@ -53,4 +53,8 @@ export class AppComponent {
 	  this.postDoc = this.afs.doc('posts/' + id); //this gets the specific post (or "document" in firestore) from firestore based on the id of clicked element
 	  this.singlePost = this.postDoc.valueChanges(); //this changes that post's observable into a readable json
   }
+
+  deletePost(id){
+	  this.afs.doc('posts/' + id).delete();
+  }
 }
