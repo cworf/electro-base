@@ -49,11 +49,14 @@ export class PostsComponent implements OnInit {
 				return { id, data }; //this is the new object given to each post
 			});
 		}); console.log(this.auth.user);
-		this.auth.user.subscribe(data => {
-  		  console.log(data);
-  	  		this.authorName = data.displayName;
-			this.authorId = data.uid;
-		});
+		if (this.auth.user){
+			this.auth.user.subscribe(data => {
+	  		  console.log(data);
+	  	  		this.authorName = data.displayName;
+				this.authorId = data.uid;
+			});
+		}
+
   }
 
   addPost(){

@@ -31,6 +31,8 @@ export class AuthService {
   }
 
   normalLogin(email, pw){
+	  console.log(email)
+	  console.log(pw)
 	  firebase.auth().createUserWithEmailAndPassword(email, pw)
 	  	.then((user) => {
 			this.updateUserData(user);
