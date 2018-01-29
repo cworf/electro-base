@@ -11,7 +11,7 @@ import { Post, PostId } from '../core/post';
 })
 export class MyPostsComponent implements OnInit {
 
-	posts:any;
+	myPosts:any;
 	singlePost:any;
 
 	title: string;
@@ -21,16 +21,16 @@ export class MyPostsComponent implements OnInit {
   constructor(public fss: FirestoreService) { }
 
   ngOnInit() {
-	  this.posts = this.fss.getPosts()
-	  console.log("this ran")
+	  this.myPosts = this.fss.getPosts("thisUser");
+	  console.log(this.myPosts)
   }
 
   getSinglePost(id){
 	  this.singlePost = this.fss.getPost(id)
   }
 
-  doAddPost(){
-	  this.fss.addPost({'title': this.title, 'content': this.content, 'authorName': this.fss.authorName, 'authorId': this.fss.authorId});
-  }
+  // doAddPost(){
+	//   this.fss.addPost({'title': this.title, 'content': this.content, 'authorName': this.fss.authorName, 'authorId': this.fss.authorId});
+  // }
 
 }

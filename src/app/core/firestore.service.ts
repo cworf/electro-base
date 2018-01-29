@@ -8,12 +8,15 @@ import {
 } from 'angularfire2/firestore';
 import { Post, PostId } from './post';
 import { AuthService } from './auth.service';
+import 'rxjs/operators/map';
 
 @Injectable()
 export class FirestoreService {
 
 	postsCollection: AngularFirestoreCollection<Post>;
 	posts: any;
+	myPostsCollection: AngularFirestoreCollection<Post>;
+	myPosts: any;
 
 	authorName: string;
 	authorId: string;
@@ -34,17 +37,30 @@ export class FirestoreService {
   			});
   		}); console.log(this.auth.user);
 
-  		if (this.auth.user){
-  			this.auth.user.subscribe(data => {
-  	  		  console.log(data);
-  	  	  		this.authorName = data.displayName;
-  				this.authorId = data.uid;
+		///////////////// GETTING CURRENT USER INFO
+			if (this.auth.user){
+			this.auth.user.subscribe(data => {
+				this.authorName = data.displayName;
+				this.authorId = data.uid;
   			});
-  		}
+			}
 	}
 
-	getPosts(){
-		return this.posts
+	getPosts(requestedUsersPosts?){ //question mark means its optional
+		if (requestedUsersPosts) {
+			console.log(this.authorName)
+			this.auth.user.subscribe(author => {
+				this.authorName = author.displayName;
+				this.myPostsCollection = this.afs.collection('posts', ref => ref.where('authorId', '==', `${author.uid}`));
+				this.myPostsCollection.valueChanges();
+				console.log("this is a thing")},
+      			error => console.log("Error: ", error),
+				() => console.log("complete"));
+
+
+		} else {
+			return this.posts
+		}
 	}
 
 	addPost(post){

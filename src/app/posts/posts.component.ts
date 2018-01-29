@@ -21,7 +21,7 @@ export class PostsComponent implements OnInit {
 
 	  ngOnInit() {
 		  this.posts = this.fss.getPosts()
-		  console.log("this ran")
+		  console.log(this.posts)
 	  }
 
 	  getSinglePost(id){
