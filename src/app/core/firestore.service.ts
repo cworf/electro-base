@@ -38,27 +38,25 @@ export class FirestoreService {
   		}); console.log(this.auth.user);
 
 		///////////////// GETTING CURRENT USER INFO
-			if (this.auth.user){
+			// if (this.auth.user){
 			this.auth.user.subscribe(data => {
 				this.authorName = data.displayName;
 				this.authorId = data.uid;
   			});
-			}
+			// }
 	}
 
 	getPosts(requestedUsersPosts?){ //question mark means its optional
 		if (requestedUsersPosts) {
 			console.log(this.authorName)
 			this.auth.user.subscribe(author => {
+				let uid = author.uid;
 				this.authorName = author.displayName;
-				this.myPostsCollection = this.afs.collection('posts', ref => ref.where('authorId', '==', `${author.uid}`));
-				this.myPostsCollection.valueChanges();
-				console.log("this is a thing")},
-      			error => console.log("Error: ", error),
-				() => console.log("complete"));
-
-
+				this.myPostsCollection = this.afs.collection('posts', ref => ref.where('authorId', '==', `${uid}`));
+				this.myPostsCollection.valueChanges()
+			});
 		} else {
+			console.log("this fired")
 			return this.posts
 		}
 	}

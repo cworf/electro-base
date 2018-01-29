@@ -6,7 +6,8 @@ import { Post, PostId } from '../core/post';
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
-  styleUrls: ['./posts.component.css']
+  styleUrls: ['./posts.component.css'],
+  providers: [FirestoreService]
 })
 export class PostsComponent implements OnInit {
 
@@ -29,6 +30,7 @@ export class PostsComponent implements OnInit {
 	  }
 
 	  doAddPost(){
+		  console.log(this.fss.authorName)
 		  this.fss.addPost({'title': this.title, 'content': this.content, 'authorName': this.fss.authorName, 'authorId': this.fss.authorId});
 	  }
 
